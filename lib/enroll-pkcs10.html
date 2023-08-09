@@ -1,0 +1,144 @@
+<script type="text/html" data-template-name="enroll-pkcs10">
+
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="fa fa-tag"></i> Name
+        </label>
+        <input type="text" id="node-input-name" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-tls">
+            <i class="fa fa-tag"></i> TLS Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-tls">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-ejbcaConfig">
+            <i class="fa fa-tag"></i> EJBCA Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-ejbcaConfig">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-input-username"> Username</label>
+        <input type="text" id="node-input-username" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-enrollment_code"> Enrollment code</label>
+        <input type="text" id="node-input-enrollment_code" placeholder="">
+    </div>
+    <div class="form-row" id="node-config-warning" style="display: none; color: red;">
+        Warning: Number of bits is too low.
+    </div>
+</script>
+
+<script type="text/javascript">
+    (function () {
+        RED.nodes.registerType('enroll-pkcs10', {
+            category: 'EJBCA',
+            color: "rgb(95, 97, 255)",
+            defaults: {
+                name: {value: ""},
+                tls: {
+                    type: "tls-config",
+                    required: true,
+                    label: RED._("node-red:httpin.tls-config")
+                },
+                ejbcaConfig: {
+                    type: "ejbca-config-3",
+                    value: "",
+                    required: true
+                },
+                username: {value: ""},
+            },
+            credentials: {
+                enrollment_code: {type: "password"}
+            },
+            inputs: 1,
+            outputs: 1,
+            icon: "icons/7-retweet-solid.svg",
+            label: function () {
+                return this.name || this._("enroll-pkcs10");
+            },
+            labelStyle: function () {
+                return this.name ? "node_label_italic" : "";
+            },
+            oneditprepare: function () {
+
+                console.log("WORKS");
+
+                $("#node-input-enrollment_code").on('input', function () {
+                    console.log("Input event listener triggered");
+                    var ejbcaConfigNodeId = $("#node-input-ejbcaConfig").val();
+
+                    // Retrieve the ejbca-config-3 node instance
+                    var ejbcaConfigNode = RED.nodes.node(ejbcaConfigNodeId);
+
+                    console.log("Input event listener triggered - 2");
+
+                    if (ejbcaConfigNode) {
+                        var enrolmentInput = $(this);
+                        var inputValue = enrolmentInput.val(); // Get the input value
+                        var numberOfBits = inputValue.toString(2).length; // Count the bits
+                        var configdata = JSON.parse(ejbcaConfigNode.ejbcaConf);
+                        var minimumBitsThreshold = configdata.profile.enrollment_code.minimum_bits;
+
+                        // Show a warning if the number of bits is too low
+                        if (numberOfBits < minimumBitsThreshold) {
+                            // Display a warning message
+                            $("#node-config-warning").show();
+                        } else {
+                            // Hide the warning message
+                            $("#node-config-warning").hide();
+                        }
+                    }
+                });
+
+                $("#node-input-ejbcaConfig").on('change', function () {
+                    var ejbcaConfigNodeId = $(this).val();
+
+                    // Retrieve the ejbca-config-3 node instance
+                    var ejbcaConfigNode = RED.nodes.node(ejbcaConfigNodeId);
+
+                    if (ejbcaConfigNode) {
+
+                        console.log("node-input-ejbcaConfig WORKS");
+
+                        // Function to update inputs based on ejbcaConfig
+                        function updateInputs(config_unparsed) {
+                            var configdata = JSON.parse(config_unparsed.ejbcaConf);
+
+                            var usernameinputName = "username";
+                            var usernameinputElement = $("#node-input-" + usernameinputName);
+
+                            if (configdata.profile.username.auto_generated) {
+                                usernameinputElement.prop("disabled", true);
+                            }
+
+                            var enrollmentcodeinputName = "enrollment_code";
+                            var enrollmentcodeinputElement = $("#node-input-" + enrollmentcodeinputName);
+
+                            if (configdata.profile.enrollment_code.required) {
+                                enrollmentcodeinputElement.prop("required", true);
+                            }
+                            if (configdata.profile.enrollment_code.auto_generated) {
+                                enrollmentcodeinputElement.prop("disabled", true);
+                            }
+                        }
+
+                        updateInputs(ejbcaConfigNode);
+
+                    }
+                });
+            },
+            oneditsave: function () {
+                var tlsConfigInput = $("#node-input-tls");
+                var selectedTlsConfig = tlsConfigInput.val();
+                config.tls = selectedTlsConfig !== "_ADD_" ? selectedTlsConfig : "";
+            },
+        });
+    })();
+</script>

@@ -1,0 +1,84 @@
+<script type="text/html" data-template-name="revoke">
+
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="fa fa-tag"></i> Name
+        </label>
+        <input type="text" id="node-input-name" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-tls">
+            <i class="fa fa-tag"></i> TLS Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-tls">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-ejbcaConfig">
+            <i class="fa fa-tag"></i> EJBCA Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-ejbcaConfig">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-input-serial_number"> Serial number</label>
+        <input type="text" id="node-input-serial_number" placeholder="">
+    </div>
+
+        <div class="form-row">
+        <label for="node-input-revocation_reason"><i class="fa fa-key"></i> Revocation reason</label>
+        <select id="node-input-revocation_reason">
+            <option value="UNSPECIFIED">UNSPECIFIED</option>
+            <option value="KEYCOMPROMISE">KEYCOMPROMISE</option>
+            <option value="CACOMPROMISE">CACOMPROMISE</option>
+            <option value="AFFILIATIONCHANGED">AFFILIATIONCHANGED</option>
+            <option value="SUPERSEDED">SUPERSEDED</option>
+            <option value="CESSATIONOFOPERATION">CESSATIONOFOPERATION</option>
+            <option value="CERTIFICATEHOLD">CERTIFICATEHOLD</option>
+            <option value="REMOVEFROMCRL">REMOVEFROMCRL</option>
+            <option value="PRIVILEGESWITHDRAWN">PRIVILEGESWITHDRAWN</option>
+            <option value="AACOMPROMISE">AACOMPROMISE</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/javascript">
+    (function () {
+        RED.nodes.registerType('revoke', {
+            category: 'EJBCA',
+            color: "rgb(95, 97, 255)",
+            defaults: {
+                name: {value: ""},
+                tls: {
+                    type: "tls-config",
+                    required: true,
+                    label: RED._("node-red:httpin.tls-config")
+                },
+                ejbcaConfig: {
+                    type: "ejbca-config-3",
+                    value: "",
+                    required: true
+                },
+                serial_number: {value: ""},
+                revocation_reason: {value: "UNSPECIFIED"}
+            },
+
+            inputs: 1,
+            outputs: 1,
+            icon: "icons/4-hand-solid.svg",
+            label: function () {
+                return this.name || this._("revoke");
+            },
+            labelStyle: function () {
+                return this.name ? "node_label_italic" : "";
+            },
+            oneditsave: function () {
+                var tlsConfigInput = $("#node-input-tls");
+                var selectedTlsConfig = tlsConfigInput.val();
+                config.tls = selectedTlsConfig !== "_ADD_" ? selectedTlsConfig : "";
+            },
+        });
+    })();
+</script>

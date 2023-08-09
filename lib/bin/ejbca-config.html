@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ejbca-config', {
+        category: 'config',
+        defaults: {
+            name: {value: ""},
+            certificate_profile_name: {value: ""},
+            end_entity_profile_name: {value: ""},
+            certificate_authority_name: {value: ""},
+            hostname: {value: ""},
+            profile: {value: ""}
+        },
+        label: function () {
+            return this.name || 'EJBCA Config';
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="ejbca-config">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-bookmark"></i> Name</label>
+        <input type="text" id="node-config-input-name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-certificate_profile_name"><i class="fa fa-bookmark"></i> Certificate Profile Name</label>
+        <input type="text" id="node-config-input-certificate_profile_name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-end_entity_profile_name"><i class="fa fa-bookmark"></i> End Entity Profile
+            Name</label>
+        <input type="text" id="node-config-input-end_entity_profile_name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-certificate_authority_name"><i class="fa fa-bookmark"></i> CA Name</label>
+        <input type="text" id="node-config-input-certificate_authority_name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-hostname"><i class="fa fa-bookmark"></i> Hostname</label>
+        <input type="text" id="node-config-input-hostname">
+    </div>
+</script>

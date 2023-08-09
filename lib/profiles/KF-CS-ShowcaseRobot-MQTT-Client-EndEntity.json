@@ -1,0 +1,57 @@
+{
+  "subjects": [
+    {
+      "property": "CN",
+      "value": "",
+      "required": true,
+      "modifiable": true
+    },
+    {
+      "property": "O",
+      "value": "Campus Schwarzwald",
+      "required": true,
+      "modifiable": false
+    },
+    {
+      "property": "OU",
+      "value": "Showcase Robot",
+      "required": true,
+      "modifiable": false
+    },
+    {
+      "property": "C",
+      "value": "",
+      "required": true,
+      "modifiable": false
+    }
+  ],
+  "subject_alternative_names": [
+        {
+      "property": "ipAdress1",
+      "value": "",
+      "required": false,
+      "modifiable": true
+    }
+  ],
+  "profile": {
+    "hostname": "campuspki.germanywestcentral.cloudapp.azure.com",
+    "certificate_profile_name": "KF-CS-ShowcaseRobot-MQTT-CertProfile",
+    "end_entity_profile_name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
+    "certificate_authority_name": "KS-CS-ShowcaseRobot-MQTT-CA",
+    "username": {
+      "value": "",
+      "auto_generated": false
+    },
+    "enrollment_code": {
+      "required": true,
+      "auto_generated": false,
+      "minimum_bits": 0
+    },
+    "mail": {
+      "use": true,
+      "required": false,
+      "modifiable": false
+    }
+  }
+}
+

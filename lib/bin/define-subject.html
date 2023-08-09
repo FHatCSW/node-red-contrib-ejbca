@@ -1,0 +1,36 @@
+
+<script type="text/x-red" data-template-name="define subject">
+    <div class="form-row">
+        <label for="node-input-cn"><i class="fa fa-dot-circle-o"></i> CN</label>
+        <input type="text" id="node-input-cn" placeholder="www.google.com">
+    </div>
+    <div class="form-row">
+        <label for="node-input-o"><i class="fa fa-clock-o"></i> O</label>
+        <input type="text" id="node-input-o" placeholder="5">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ou"><i class="fa fa-refresh"></i> OU</label>
+        <input type="text" id="node-input-ou" placeholder="1">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="define subject">
+    <p>Pings a machine and returns the trip time in ms. Will perform ping on <b>any</b> input.</p>
+    <p>Returns <b>false</b> if no response received within the configured timeout period,  or if the host is unresolveable.</p>
+    <p>Host set in configuration may be overridden by passing in a host in <code>msg.host</code>.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('define subject',{
+        category: 'advanced-input',
+        color:"#fdf0c2",
+        defaults: {
+            cn: {value:""},
+            o: {value:""},
+            ou: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "alert.png",
+    });
+</script>

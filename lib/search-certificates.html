@@ -1,0 +1,133 @@
+<script type="text/html" data-template-name="search-certificates">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <div style="display: inline-block; width: calc(100% - 105px)"><input type="text" id="node-input-name"</div>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-tls">
+            <i class="fa fa-tag"></i> TLS Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-tls">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-ejbcaConfig">
+            <i class="fa fa-tag"></i> EJBCA Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-ejbcaConfig">
+    </div>
+
+    <div class="form-row" style="position: relative; margin-bottom: 0px;">
+        <label for="node-input-template"><i class="fa fa-file-code-o"></i> Search config</span></label>
+        <input type="hidden" id="node-input-template" autofocus="autofocus">
+        <div style="position: absolute; right:0;display:inline-block; text-align: right; font-size: 0.8em;">
+            <span data-i18n="template.label.format"></span>:
+            <button type="button" id="node-template-expand-editor" class="red-ui-button red-ui-button-small"><i
+                    class="fa fa-expand"></i></button>
+        </div>
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-template-editor"></div>
+    </div>
+
+
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('search-certificates', {
+        color: "rgb(95, 97, 255)",
+        category: 'EJBCA',
+        defaults: {
+            name: {value: ""},
+            tls: {
+                type: "tls-config",
+                required: true,
+                label: RED._("node-red:httpin.tls-config")
+            },
+            ejbcaConfig: {
+                type: "ejbca-config-3",
+                value: "",
+                required: true
+            },
+            fieldType: {value: "msg"},
+            format: {value: "handlebars"},
+            syntax: {value: "mustache"},
+            template: {value: ""},
+            output: {value: "str"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icons/5-magnifying-glass-solid.svg",
+        label: function () {
+            return this.name || this._("search-certificates");
+            ;
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function () {
+            const that = this;
+            const stateId = RED.editor.generateViewStateId("node", this, "");
+
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-template-editor',
+                mode: 'ace/mode/json',
+                stateId: stateId,
+                value: $("#node-input-template").val()
+            });
+            RED.library.create({
+                url: "templates", // where to get the data from
+                type: "template", // the type of object the library is for
+                editor: that.editor, // the field name the main text body goes to
+                fields: ['name', 'format', 'output', 'syntax'],
+                ext: "txt"
+            });
+
+            RED.popover.tooltip($("#node-template-expand-editor"), RED._("node-red:common.label.expand"));
+            $("#node-template-expand-editor").on("click", function (e) {
+                e.preventDefault();
+                const value = that.editor.getValue();
+                that.editor.saveView();
+                RED.editor.editText({
+                    mode: "ace/mode/json",
+                    value: value,
+                    stateId: stateId,
+                    width: "Infinity",
+                    focus: true,
+                    complete: function (v, cursor) {
+                        that.editor.setValue(v, -1);
+                        setTimeout(function () {
+                            that.editor.restoreView();
+                            that.editor.focus();
+                        }, 250);
+                    }
+                })
+            })
+        },
+        oneditsave: function () {
+            $("#node-input-template").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+
+            var tlsConfigInput = $("#node-input-tls");
+            var selectedTlsConfig = tlsConfigInput.val();
+            config.tls = selectedTlsConfig !== "_ADD_" ? selectedTlsConfig : "";
+        },
+        oneditcancel: function () {
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditresize: function (size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i = 0; i < rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height", height + "px");
+            this.editor.resize();
+        }
+    });
+</script>

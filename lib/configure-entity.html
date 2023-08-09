@@ -1,0 +1,246 @@
+<script type="text/javascript">
+    RED.nodes.registerType('configure-entity', {
+        category: 'EJBCA',
+        color: "rgb(95, 97, 255)",
+        defaults: {
+            name: {value: ""},
+            ejbcaConfig: {type: "ejbca-config-3", value: ""},
+            CN: {value: ""},
+            O: {value: ""},
+            OU: {value: ""},
+            C: {value: ""},
+            L: {value: ""},
+            ST: {value: ""},
+            postalCode: {value: ""},
+            streetAdress: {value: ""},
+            serialNumber: {value: ""},
+            emailAdress: {value: ""},
+            givenName: {value: ""},
+            surName: {value: ""},
+            initials: {value: ""},
+            title: {value: ""},
+            description: {value: ""},
+            ipAddress1: {value: ""},
+            ipAddress2: {value: ""},
+            ipAddress3: {value: ""},
+            Uri1: {value: ""},
+            Uri2: {value: ""},
+            Uri3: {value: ""},
+            Dns1: {value: ""},
+            Dns2: {value: ""},
+            Dns3: {value: ""}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icons/3-gears-solid.svg",
+        label: function () {
+            return this.name || "configure-entity";
+        },
+        labelStyle: function () {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function () {
+
+            $("#node-input-ejbcaConfig").on('change', function () {
+                var ejbcaConfigNodeId = $(this).val();
+
+                // Retrieve the ejbca-config-3 node instance
+                var ejbcaConfigNode = RED.nodes.node(ejbcaConfigNodeId);
+                console.log("NOT works")
+
+
+                if (ejbcaConfigNode) {
+
+
+                    // Function to update inputs based on ejbcaConfig
+                    function updateInputs(config_unparsed) {
+                        var configdata = JSON.parse(config_unparsed.ejbcaConf);
+
+                        // Create an array to store subject property names
+                        var subjectPropertyNames = [];
+
+                        ["subjects", "subject_alternative_names"].forEach(function (section) {
+                            configdata[section].forEach(function (subject) {
+                                var propertyName = subject.property;
+                                var inputElement = $("#node-input-" + propertyName);
+
+                                var inputValue = inputElement.val() || subject.value; // Use form input or default from JSON
+                                inputElement.val(inputValue); // Set the input value
+                                inputElement.prop("required", subject.required);
+                                inputElement.prop("disabled", !subject.modifiable);
+                                subjectPropertyNames.push(propertyName);
+                            });
+                        });
+                        if (configdata.subject_alternative_names !== undefined) {
+
+                        }
+
+                        // Loop through predefined text inputs and hide/show them based on the array
+                        var predefinedInputs = ["CN", "O", "OU", "C", "L", "ST", "postalCode", "streetAdress",
+                            "serialNumber", "emailAdress", "givenName", "surName", "initials", "title", "description",
+                            "ipAddress1", "ipAddress2", "ipAddress3", "Uri1", "Uri2", "Uri3", "Dns1", "Dns2", "Dns3"
+                        ]; // Add other predefined inputs
+
+                        predefinedInputs.forEach(function (inputName) {
+                            var inputElement = $("#node-input-" + inputName);
+                            var labelElement = $("label[for='node-input-" + inputName + "']");
+                            if (subjectPropertyNames.includes(inputName)) {
+                                inputElement.show();
+                                labelElement.show();
+                            } else {
+                                inputElement.hide();
+                                labelElement.hide();
+                            }
+                        });
+
+                    }
+
+                    updateInputs(ejbcaConfigNode);
+
+                } else {
+                    console.error("ejbca-config-3 node not found.");
+                }
+            });
+
+        },
+
+
+    });
+</script>
+
+<script type="text/html" data-template-name="configure-entity">
+    <style>
+
+    .larger-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+    }
+
+    .horizontal-line {
+    border-top: 1px solid #ccc;
+    margin-bottom: 10px;
+    }
+    </style>
+
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="fa fa-tag"></i> Name
+        </label>
+        <input type="text" id="node-input-name" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ejbcaConfig">
+            <i class="fa fa-tag"></i> EJBCA Configuration
+        </label>
+        <input type="text" style="width: 300px" id="node-input-ejbcaConfig">
+    </div>
+
+    <div class="horizontal-line"></div>
+
+    <div class="larger-header">Subject</div>
+
+    <div class="form-row">
+        <label for="node-input-CN"> Common name</label>
+        <input type="text" id="node-input-CN" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-O"> Organization</label>
+        <input type="text" id="node-input-O" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-OU"> Organization unit</label>
+        <input type="text" id="node-input-OU" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-C"> Country</label>
+        <input type="text" id="node-input-C" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-L"> Locality</label>
+        <input type="text" id="node-input-L" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ST"> State</label>
+        <input type="text" id="node-input-ST" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-postalCode"> Postal code</label>
+        <input type="text" id="node-input-postalCode" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-streetAdress"> Street adress</label>
+        <input type="text" id="node-input-streetAdress" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-serialNumber"> Serial number</label>
+        <input type="text" id="node-input-serialNumber" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-emailAdress"> E-mail adress</label>
+        <input type="text" id="node-input-emailAdress" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-givenName"> Given name</label>
+        <input type="text" id="node-input-givenName" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-surName"> Sur name</label>
+        <input type="text" id="node-input-surName" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-initials"> Initials</label>
+        <input type="text" id="node-input-initials" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-title"> Title</label>
+        <input type="text" id="node-input-title" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-description"> Description</label>
+        <input type="text" id="node-input-description" placeholder="">
+    </div>
+
+    <div class="horizontal-line"></div>
+
+    <div class="larger-header">Subject Alternative Name</div>
+
+    <div class="form-row">
+        <label for="node-input-ipAddress1"> IP Address (1)</label>
+        <input type="text" id="node-input-ipAddress1" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ipAddress2"> IP Address (2)</label>
+        <input type="text" id="node-input-ipAddress2" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-ipAddress3"> IP Address (3)</label>
+        <input type="text" id="node-input-ipAddress3" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-Uri1"> URI (1)</label>
+        <input type="text" id="node-input-Uri1" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Uri2"> URI (2)</label>
+        <input type="text" id="node-input-Uri2" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Uri3"> URI (3)</label>
+        <input type="text" id="node-input-Uri3" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-Dns1"> DNS (1)</label>
+        <input type="text" id="node-input-Dns1" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Dns2"> DNS (2)</label>
+        <input type="text" id="node-input-Dns2" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-Dns3"> DNS (3)</label>
+        <input type="text" id="node-input-Dns3" placeholder="">
+    </div>
+
+</script>

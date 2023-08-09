@@ -1,0 +1,61 @@
+<script type="text/x-red" data-template-name="ejbca-config-3">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row" style="margin-bottom: 0px;">
+        <label for="node-config-input-ejbcaConf" style="width: 100% !important;"><i class="fa fa-list"></i> Config</label>
+        <input type="hidden" id="node-config-input-ejbcaConf" autofocus="autofocus">
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-ejbcaConf-editor"></div>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('ejbca-config-3',{
+        category: 'config',
+        color: "rgb(95, 97, 255)",
+        defaults: {
+            name: {value:""},
+            ejbcaConf: {value:"", validate: RED.validators.typedInput("json")}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "icons/3-gears-solid.svg",
+        label: function () {
+            return this.name || 'EJBCA Config';
+        },
+        inputLabels: "set|trigger|methods",
+        outputLabels: "currentState|data",
+        oneditprepare: function() {
+            var that = this;
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-ejbcaConf-editor',
+                mode: 'ace/mode/json',
+                value: $("#node-config-input-ejbcaConf").val()
+            });
+            this.editor.focus();
+        },
+        oneditsave: function() {
+            $("#node-config-input-ejbcaConf").val(this.editor.getValue());
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function() {
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i=0; i<rows.size(); i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height",height+"px");
+            this.editor.resize();
+        }
+    });
+</script>

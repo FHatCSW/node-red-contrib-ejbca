@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    RED.nodes.registerType('export-keys', {
+        category: 'EJBCA',
+        color: "rgb(95, 97, 255)",
+        defaults: {
+            name: {value: ""},
+            exportLocation: {value: ""}
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "icons/2-file-export-solid.svg",
+        label: function () {
+            return this.name || "export-keys";
+        },
+    });
+</script>
+
+<!-- Content of the configuration dialog -->
+<script type="text/x-red" data-template-name="export-keys">
+    <div className="form-row">
+        <label htmlFor="node-input-name"><i className="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-exportLocation"><i className="fa fa-folder"></i> Export Location</label>
+        <input type="text" className="node-input-exportLocation" id="node-input-exportLocation" placeholder="Enter export location">
+    </div>
+</script>
