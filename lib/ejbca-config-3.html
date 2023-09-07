@@ -1,34 +1,58 @@
-<script type="text/x-red" data-template-name="ejbca-config-3">
+<script type="text/html" data-template-name="ejbca-config-3">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">
     </div>
     <div class="form-row" style="margin-bottom: 0px;">
-        <label for="node-config-input-ejbcaConf" style="width: 100% !important;"><i class="fa fa-list"></i> Config</label>
+        <label for="node-config-input-ejbcaConf" style="width: 100% !important;"><i class="fa fa-list"></i>
+            Config</label>
         <input type="hidden" id="node-config-input-ejbcaConf" autofocus="autofocus">
     </div>
     <div class="form-row node-text-editor-row">
         <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-ejbcaConf-editor"></div>
     </div>
+
+    <div id="validation-result" class="validation-result">
+        <div class="validation-box" id="validation-box"></div>
+    </div>
 </script>
 
+<style>
+    .validation-box {
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .validation-success {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .validation-error {
+        background-color: #f44336;
+        color: white;
+    }
+</style>
+
 <script type="text/javascript">
-    RED.nodes.registerType('ejbca-config-3',{
+    RED.nodes.registerType('ejbca-config-3', {
         category: 'config',
         color: "rgb(95, 97, 255)",
         defaults: {
-            name: {value:""},
-            ejbcaConf: {value:"", validate: RED.validators.typedInput("json")}
+            name: {value: ""},
+            ejbcaConf: {value: "", validate: RED.validators.typedInput("json")}
         },
-        inputs:1,
-        outputs:1,
+        inputs: 1,
+        outputs: 1,
         icon: "icons/3-gears-solid.svg",
         label: function () {
             return this.name || 'EJBCA Config';
         },
         inputLabels: "set|trigger|methods",
         outputLabels: "currentState|data",
-        oneditprepare: function() {
+        oneditprepare: function () {
             var that = this;
             this.editor = RED.editor.createEditor({
                 id: 'node-input-ejbcaConf-editor',
@@ -36,25 +60,152 @@
                 value: $("#node-config-input-ejbcaConf").val()
             });
             this.editor.focus();
+
+            function validateConfig(jsonConfig) {
+                try {
+                    const config = JSON.parse(jsonConfig);
+
+                    // Check if 'subjects' and 'subject_alternative_names' properties exist
+                    if (!config.subjects || !config.subject_alternative_names) {
+                        return "JSON must have 'subjects' and 'subject_alternative_names' properties.";
+                    }
+
+                    // Validate 'subjects' array
+                    if (!Array.isArray(config.subjects) || config.subjects.length === 0) {
+                        return "'subjects' must be a non-empty array.";
+                    }
+
+                    // Validate each subject in 'subjects' array
+                    for (const subject of config.subjects) {
+                        const errors = [];
+
+                        if (!subject.property || typeof subject.property !== 'string') {
+                            errors.push("'property' must be a non-empty string.");
+                        }
+
+                        if (typeof subject.prop_value !== 'string') {
+                            errors.push("'prop_value' must be a string.");
+                        }
+
+                        if (!subject.hasOwnProperty('prop_required') || typeof subject.prop_required !== 'boolean') {
+                            errors.push("'prop_required' must be a boolean.");
+                        }
+
+                        if (!subject.hasOwnProperty('prop_modifiable') || typeof subject.prop_modifiable !== 'boolean') {
+                            errors.push("'prop_modifiable' must be a boolean.");
+                        }
+
+                        if (errors.length > 0) {
+                            return `Error in '${subject.property}': ${errors.join(' ')}`;
+                        }
+                    }
+
+                    // Validate 'subject_alternative_names' array
+                    if (!Array.isArray(config.subject_alternative_names)) {
+                        return "'subject_alternative_names' must be an array.";
+                    }
+
+                    // Validate each subject alternative name in 'subject_alternative_names' array
+                    for (const san of config.subject_alternative_names) {
+                        const errors = [];
+
+                        if (!san.property || typeof san.property !== 'string') {
+                            errors.push("'property' must be a non-empty string.");
+                        }
+
+                        if (typeof san.prop_value !== 'string') {
+                            errors.push("'prop_value' must be a string.");
+                        }
+
+                        if (!san.hasOwnProperty('prop_required') || typeof san.prop_required !== 'boolean') {
+                            errors.push("'prop_required' must be a boolean.");
+                        }
+
+                        if (!san.hasOwnProperty('prop_modifiable') || typeof san.prop_modifiable !== 'boolean') {
+                            errors.push("'prop_modifiable' must be a boolean.");
+                        }
+
+                        if (errors.length > 0) {
+                            return `Error in '${san.property}': ${errors.join(' ')}`;
+                        }
+                    }
+
+                    // Validate 'profile' object
+                    const profile = config.profile;
+                    if (!profile) {
+                        return "'profile' object is missing.";
+                    }
+
+                    const requiredProperties = [
+                        'hostname',
+                        'certificate_profile_name',
+                        'end_entity_profile_name',
+                        'certificate_authority_name',
+                        'username',
+                        'enrollment_code',
+                        'mail',
+                    ];
+
+                    for (const prop of requiredProperties) {
+                        if (!profile.hasOwnProperty(prop)) {
+                            return `'profile' object must have '${prop}' property.`;
+                        }
+                    }
+
+                    // If all checks pass, the JSON is valid
+                    return "Valid JSON";
+                } catch (error) {
+                    return "Invalid JSON format.";
+                }
+            }
+
+            // Function to validate the configuration
+            function validateAndDisplay() {
+                var jsonConfig = that.editor.getValue();
+                var validationResult = validateConfig(jsonConfig);
+                // Update and display the validation result
+                var validationResultElement = $("#validation-result");
+
+                if (validationResult === 'Valid JSON') {
+                    // Display validation success message
+                    validationResultElement.text("Validation Success: " + validationResult);
+                    validationResultElement.removeClass("validation-box validation-error");
+                    validationResultElement.addClass("validation-box validation-success");
+                } else {
+                    // Display validation error message
+                    validationResultElement.text("Validation Error: " + validationResult);
+                    validationResultElement.removeClass("validation-box validation-success");
+                    validationResultElement.addClass("validation-box validation-error");
+                }
+            }
+
+            // Add a change event listener to the editor
+            this.editor.on("change", function () {
+                validateAndDisplay();
+            });
+
+            // Perform initial validation when the editor opens
+            validateAndDisplay();
+
         },
-        oneditsave: function() {
+        oneditsave: function () {
             $("#node-config-input-ejbcaConf").val(this.editor.getValue());
             this.editor.destroy();
             delete this.editor;
         },
-        oneditcancel: function() {
+        oneditcancel: function () {
             this.editor.destroy();
             delete this.editor;
         },
-        oneditresize: function(size) {
+        oneditresize: function (size) {
             var rows = $("#dialog-form>div:not(.node-text-editor-row)");
             var height = $("#dialog-form").height();
-            for (var i=0; i<rows.size(); i++) {
+            for (var i = 0; i < rows.size(); i++) {
                 height -= $(rows[i]).outerHeight(true);
             }
             var editorRow = $("#dialog-form>div.node-text-editor-row");
-            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
-            $(".node-text-editor").css("height",height+"px");
+            height -= (parseInt(editorRow.css("marginTop")) + parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height", height + "px");
             this.editor.resize();
         }
     });

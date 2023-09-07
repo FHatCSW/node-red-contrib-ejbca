@@ -2,36 +2,30 @@
   "subjects": [
     {
       "property": "CN",
-      "value": "",
-      "required": true,
-      "modifiable": true
+      "prop_value": "",
+      "prop_required": true,
+      "prop_modifiable": true
     },
     {
       "property": "O",
-      "value": "Campus Schwarzwald",
-      "required": true,
-      "modifiable": false
+      "prop_value": "Campus Schwarzwald",
+      "prop_required": true,
+      "prop_modifiable": false
     },
     {
       "property": "OU",
-      "value": "Showcase Robot",
-      "required": true,
-      "modifiable": false
+      "prop_value": "Showcase Robot",
+      "prop_required": true,
+      "prop_modifiable": false
     },
     {
       "property": "C",
-      "value": "",
-      "required": true,
-      "modifiable": false
+      "prop_value": "",
+      "prop_required": true,
+      "prop_modifiable": false
     }
   ],
   "subject_alternative_names": [
-        {
-      "property": "ipAdress1",
-      "value": "",
-      "required": false,
-      "modifiable": true
-    }
   ],
   "profile": {
     "hostname": "campuspki.germanywestcentral.cloudapp.azure.com",

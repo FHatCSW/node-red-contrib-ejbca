@@ -64,10 +64,10 @@
                                 var propertyName = subject.property;
                                 var inputElement = $("#node-input-" + propertyName);
 
-                                var inputValue = inputElement.val() || subject.value; // Use form input or default from JSON
+                                var inputValue = inputElement.val() || subject.prop_value; // Use form input or default from JSON
                                 inputElement.val(inputValue); // Set the input value
-                                inputElement.prop("required", subject.required);
-                                inputElement.prop("disabled", !subject.modifiable);
+                                inputElement.prop("required", subject.prop_required);
+                                inputElement.prop("disabled", !subject.prop_modifiable);
                                 subjectPropertyNames.push(propertyName);
                             });
                         });
