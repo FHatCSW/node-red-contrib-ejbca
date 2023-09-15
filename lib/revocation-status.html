@@ -28,6 +28,11 @@
     </div>
 </script>
 
+<script type="text/html" data-help-name="revocation-status">
+    <p>A node that checks the revocation status of a  given certificate serial number.</p>
+    <p>The result is stored in msg.revocation_status and contains the issuer_dn,serial_number, revocation_reason and revoked objects</p>
+</script>
+
 <script type="text/javascript">
     (function () {
         RED.nodes.registerType('revocation-status', {

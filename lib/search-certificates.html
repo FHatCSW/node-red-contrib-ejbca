@@ -34,6 +34,30 @@
 
 </script>
 
+<script type="text/html" data-help-name="search-certificates">
+    <p>A node that searches certificates for a given EJBCA configuration.</p>
+    <p>The search string can contain several arguments.</p>
+    <p>Example:</p>
+    <code>
+{
+    "max_number_of_results": 10,
+    "criteria": [
+        {
+            "property": "STATUS",
+            "value": "CERT_ACTIVE",
+            "operation": "EQUAL"
+        },
+        {
+            "property": "CA",
+            "value": "YOUR_CA_NAME",
+            "operation": "EQUAL"
+        }
+    ]
+}
+</code>
+
+</script>
+
 <script type="text/javascript">
     RED.nodes.registerType('search-certificates', {
         color: "rgb(204, 204, 51)",
