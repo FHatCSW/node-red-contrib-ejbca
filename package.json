@@ -2,6 +2,15 @@
   "name": "node-red-contrib-ejbca",
   "version": "1.0.1",
   "description": "Node-RED Nodes to request, renew and revoke certificates via a RESTful API with EJBCA",
+  "keywords": ["Node-RED", "EJBCA", "certificate management"],
+  "homepage": "https://github.com/FHatCSW/node-red-contrib-ejbca",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FHatCSW/node-red-contrib-ejbca"
+  },
+  "bugs": {
+    "url": "https://github.com/FHatCSW/node-red-contrib-ejbca/issues"
+  },
   "node-red": {
     "nodes": {
       "ejbca-status": "lib/ejbca-status-2.js",
@@ -26,6 +35,13 @@
     "request": "^2.88.2",
     "requests": "^0.3.0"
   },
-  "author": "Florian Handke",
+    "author": {
+    "name": "Florian Handke",
+    "email": "florian.handke@campus-schwarzwald.de",
+    "url": "https://github.com/FHatCSW"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "license": "MIT"
 }
