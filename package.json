@@ -24,7 +24,8 @@
       "revocation-status": "lib/revocation-status.js",
       "revoke": "lib/revoke.js",
       "search-certificates": "lib/search-certificates.js",
-      "enroll-keystore": "lib/enroll-keystore.js"
+      "enroll-keystore": "lib/enroll-keystore.js",
+      "store-certificate": "lib/store-certificate.js"
     }
   },
   "dependencies": {

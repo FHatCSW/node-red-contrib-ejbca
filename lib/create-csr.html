@@ -4,14 +4,45 @@
         color: "rgb(204, 204, 51)",
         defaults: {
             name: { value: "" },
-            privateKey: { value: "" },
-        },
+            subjectAltnames_fieldType: {value: "str"},
+            subjectAltnames: {value: "", required: true},
+            subjects_fieldType: {value: "str"},
+            subjects: {value: "", required: true},
+            privateKey_fieldType: {value: "str"},
+            privateKey: {value: "private_key", required: true},
+            publicKey_fieldType: {value: "str"},
+            publicKey: {value: "public_key", required: true},        },
         inputs: 1,
         outputs: 1,
         icon: "icons/6-signature-solid.svg",
         label: function () {
             return this.name || "create-csr";
         },
+        oneditprepare: function () {
+                        $("#node-input-subjectAltnames").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-subjectAltnames_fieldType")
+            });
+
+            $("#node-input-subjects").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-subjects_fieldType")
+            });
+
+            $("#node-input-privateKey").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-privateKey_fieldType")
+            });
+
+            $("#node-input-publicKey").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-publicKey_fieldType")
+            });
+        }
     });
 </script>
 
@@ -26,5 +57,31 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-subjects"><i class="fa fa-folder"></i> Subjects</label>
+        <input type="text" id="node-input-subjects" style="width:250px;">
+        <input type="hidden" id="node-input-subjects_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-subjectAltnames"><i class="fa fa-folder"></i> Subject Alt. Name </label>
+        <input type="text" id="node-input-subjectAltnames" style="width:250px;">
+        <input type="hidden" id="node-input-subjectAltnames_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-privateKey"><i class="fa fa-folder"></i> Private Key</label>
+        <input type="text" id="node-input-privateKey" placeholder="private_key_location" value="ejbca.private_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-privateKey_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-publicKey"><i class="fa fa-folder"></i> Public Key</label>
+        <input type="text" id="node-input-publicKey" placeholder="public_key_location" value="ejbca.public_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-publicKey_fieldType">
     </div>
 </script>

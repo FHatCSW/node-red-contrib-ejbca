@@ -42,6 +42,12 @@
             <option value="AACOMPROMISE">AACOMPROMISE</option>
         </select>
     </div>
+
+    <div class="form-row">
+        <label for="node-input-serialNumber"><i class="fa fa-folder"></i> Serial Number</label>
+        <input type="text" id="node-input-serialNumber" placeholder="your_serial_number" style="width:250px;">
+        <input type="hidden" id="node-input-serialNumber_fieldType">
+    </div>
 </script>
 
 <script type="text/html" data-help-name="revoke">
@@ -65,7 +71,8 @@
                     value: "",
                     required: true
                 },
-                serial_number: {value: ""},
+                serialNumber_fieldType: {value:"str"},
+                serialNumber: {value: "", required: true},
                 revocation_reason: {value: "UNSPECIFIED"}
             },
 
@@ -77,6 +84,13 @@
             },
             labelStyle: function () {
                 return this.name ? "node_label_italic" : "";
+            },
+            oneditprepare: function() {
+                $("#node-input-serialNumber").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-serialNumber_fieldType")
+                });
             },
             oneditsave: function () {
                 var tlsConfigInput = $("#node-input-tls");

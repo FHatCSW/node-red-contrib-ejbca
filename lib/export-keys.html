@@ -4,7 +4,16 @@
         color: "rgb(204, 204, 51)",
         defaults: {
             name: {value: ""},
-            exportLocation: {value: ""}
+            outputDirectory_fieldType: {value: "str"},
+            outputDirectory: {value: "/path/to/default/directory", required: true, label: "/path/to/default/directory"},
+            privatefileName_fieldType: {value: "str"},
+            privatefileName: {value: "private_key", required: true},
+            publicfileName_fieldType: {value: "str"},
+            publicfileName: {value: "public_key", required: true},
+            privateKey_fieldType: {value: "str"},
+            privateKey: {value: "private_key", required: true},
+            publicKey_fieldType: {value: "str"},
+            publicKey: {value: "public_key", required: true},
         },
         inputs: 1,
         outputs: 0,
@@ -12,6 +21,37 @@
         label: function () {
             return this.name || "export-keys";
         },
+        oneditprepare: function () {
+            $("#node-input-outputDirectory").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-outputDirectory_fieldType")
+            });
+
+            $("#node-input-privatefileName").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-privatefileName_fieldType")
+            });
+
+            $("#node-input-publicfileName").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-publicfileName_fieldType")
+            });
+
+            $("#node-input-privateKey").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-privateKey_fieldType")
+            });
+                
+            $("#node-input-publicKey").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-publicKey_fieldType")
+            });
+        }
     });
 </script>
 
@@ -21,13 +61,43 @@
 </script>
 
 <!-- Content of the configuration dialog -->
-<script type="text/x-red" data-template-name="export-keys">
+<script type="text/html" data-template-name="export-keys">
     <div className="form-row">
         <label htmlFor="node-input-name"><i className="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <div className="form-row">
-        <label htmlFor="node-input-exportLocation"><i className="fa fa-folder"></i> Export Location</label>
-        <input type="text" className="node-input-exportLocation" id="node-input-exportLocation" placeholder="Enter export location">
+
+    <div class="form-row">
+        <label for="node-input-outputDirectory"><i class="fa fa-folder"></i> Output Directory</label>
+        <input type="text" id="node-input-outputDirectory" placeholder="/path/to/output/directory" style="width:250px;">
+        <input type="hidden" id="node-input-outputDirectory_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-privatefileName"><i class="fa fa-folder"></i> Private Key Filename</label>
+        <input type="text" id="node-input-privatefileName" placeholder="private_key" value="private_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-privatefileName_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-publicfileName"><i class="fa fa-folder"></i> Public Key Filename </label>
+        <input type="text" id="node-input-publicfileName" placeholder="public_key" value="public_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-publicfileName_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-privateKey"><i class="fa fa-folder"></i> Private Key</label>
+        <input type="text" id="node-input-privateKey" placeholder="private_key_location" value="ejbca.private_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-privateKey_fieldType">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-publicKey"><i class="fa fa-folder"></i> Public Key</label>
+        <input type="text" id="node-input-publicKey" placeholder="public_key_location" value="ejbca.public_key"
+               style="width:250px;">
+        <input type="hidden" id="node-input-publicKey_fieldType">
     </div>
 </script>
