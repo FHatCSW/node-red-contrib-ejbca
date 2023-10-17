@@ -1,8 +1,13 @@
 <script type="text/html" data-template-name="store-certificate">
 
+        <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
     <div class="form-row">
-        <label for="node-input-certificate"><i class="fa fa-folder"></i> Certificate</label>
-        <input type="text" id="node-input-certificate" placeholder="payload.certificate" value="payload.certificate" style="width:250px;">
+        <label for="node-input-certificate"><i class="fa fa-file-certificate"></i> Certificate</label>
+        <input type="text" id="node-input-certificate" placeholder="payload.certificate" style="width:250px;">
         <input type="hidden" id="node-input-certificate_fieldType">
     </div>
 
@@ -75,7 +80,7 @@
                 outputDirectory_fieldType: {value:"str"},
                 outputDirectory: {value: "/path/to/default/directory", required: true, label: "/path/to/default/directory"},
                 fileName_fieldType: {value:"str"},
-                fileName: {value: "certificate", required: true, label: "certificate"},
+                fileName: {value: "ejbca.enroll_pkcs10.certificate", required: true},
                 outputFormat: {value: "PEM"},
                 fileExtension: {value: "crt"}
             },
@@ -171,8 +176,8 @@
                 updateFileExtensionOptions();
 
                 // Add event listeners to update the combined text when inputs change
-                outputDirectoryInput.addEventListener("input", updateCombinedText);
-                fileNameInput.addEventListener("input", updateCombinedText);
+                outputDirectoryInput.addEventListener("change", updateCombinedText);
+                fileNameInput.addEventListener("change", updateCombinedText);
                 outputFormatSelect.addEventListener("change", updateFileExtensionOptions);
                 fileExtensionSelect.addEventListener("change", updateCombinedText);
 

@@ -9,27 +9,36 @@
 
     <div class="form-row">
         <label for="node-input-tls">
-            <i class="fa fa-tag"></i> TLS Configuration
+            <i class="fa fa-gear"></i> TLS Configuration
         </label>
         <input type="text" style="width: 300px" id="node-input-tls">
     </div>
 
     <div class="form-row">
         <label for="node-input-ejbcaConfig">
-            <i class="fa fa-tag"></i> EJBCA Configuration
+            <i class="fa fa-gear"></i> EJBCA Configuration
         </label>
         <input type="text" style="width: 300px" id="node-input-ejbcaConfig">
     </div>
 
+    <div class="form-row">
+        <label for="node-input-csrInfo"><i class="fa fa-signature"></i> CSR </label>
+        <input type="text" id="node-input-csrInfo" value="ejbca.csr" style="width:250px;">
+        <input type="hidden" id="node-input-csrInfo_fieldType">
+    </div>
+
 
     <div class="form-row">
-        <label for="node-input-username"> Username</label>
-        <input type="text" id="node-input-username" placeholder="">
+        <label for="node-input-username"><i class="fa fa-user"></i> Username</label>
+        <input type="text" id="node-input-username" style="width:250px;">
+        <input type="hidden" id="node-input-username_fieldType">
     </div>
+
     <div class="form-row">
-        <label for="node-input-enrollment_code"> Enrollment code</label>
-        <input type="text" id="node-input-enrollment_code" placeholder="">
+        <label for="node-input-enrollment_code"><i class="fa fa-key"></i> Enrollment code</label>
+        <input type="password" id="node-input-enrollment_code" placeholder="">
     </div>
+
     <div class="form-row" id="node-config-warning" style="display: none; color: red;">
         Warning: Number of bits is too low.
     </div>
@@ -57,9 +66,10 @@
                     value: "",
                     required: true
                 },
-                username: {value: ""},
-            },
-            credentials: {
+                username_fieldType: {value:"str"},
+                username: {value: "", required: true},
+                csrInfo_fieldType: {value:"msg"},
+                csrInfo: {value: "ejbca.csr", required: true},
                 enrollment_code: {type: "password"}
             },
             inputs: 1,
@@ -73,7 +83,18 @@
             },
             oneditprepare: function () {
 
-                console.log("WORKS");
+                $("#node-input-username").typedInput({
+                default: 'str',
+                types: ['msg', 'global', 'flow', 'str'],
+                typeField: $("#node-input-username_fieldType")
+                });
+
+                $("#node-input-csrInfo").typedInput({
+                default: 'msg',
+                types: ['msg', 'global', 'flow'],
+                typeField: $("#node-input-csrInfo_fieldType")
+                });
+
 
                 $("#node-input-enrollment_code").on('input', function () {
                     console.log("Input event listener triggered");

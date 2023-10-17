@@ -5,15 +5,15 @@
         defaults: {
             name: {value: ""},
             outputDirectory_fieldType: {value: "str"},
-            outputDirectory: {value: "/path/to/default/directory", required: true, label: "/path/to/default/directory"},
+            outputDirectory: {value: "/path/to/output/directory", required: true},
             privatefileName_fieldType: {value: "str"},
             privatefileName: {value: "private_key", required: true},
             publicfileName_fieldType: {value: "str"},
             publicfileName: {value: "public_key", required: true},
             privateKey_fieldType: {value: "str"},
-            privateKey: {value: "private_key", required: true},
+            privateKey: {value: "ejbca.privateKey", required: true},
             publicKey_fieldType: {value: "str"},
-            publicKey: {value: "public_key", required: true},
+            publicKey: {value: "ejbca.publicKey", required: true},
         },
         inputs: 1,
         outputs: 0,
@@ -45,7 +45,7 @@
                 types: ['msg', 'global', 'flow', 'str'],
                 typeField: $("#node-input-privateKey_fieldType")
             });
-                
+
             $("#node-input-publicKey").typedInput({
                 default: 'msg',
                 types: ['msg', 'global', 'flow', 'str'],
@@ -62,8 +62,8 @@
 
 <!-- Content of the configuration dialog -->
 <script type="text/html" data-template-name="export-keys">
-    <div className="form-row">
-        <label htmlFor="node-input-name"><i className="fa fa-tag"></i> Name</label>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 
@@ -74,28 +74,28 @@
     </div>
 
     <div class="form-row">
-        <label for="node-input-privatefileName"><i class="fa fa-folder"></i> Private Key Filename</label>
+        <label for="node-input-privatefileName"><i class="fa fa-file"></i> Private Key Filename</label>
         <input type="text" id="node-input-privatefileName" placeholder="private_key" value="private_key"
                style="width:250px;">
         <input type="hidden" id="node-input-privatefileName_fieldType">
     </div>
 
     <div class="form-row">
-        <label for="node-input-publicfileName"><i class="fa fa-folder"></i> Public Key Filename </label>
+        <label for="node-input-publicfileName"><i class="fa fa-file"></i> Public Key Filename </label>
         <input type="text" id="node-input-publicfileName" placeholder="public_key" value="public_key"
                style="width:250px;">
         <input type="hidden" id="node-input-publicfileName_fieldType">
     </div>
 
     <div class="form-row">
-        <label for="node-input-privateKey"><i class="fa fa-folder"></i> Private Key</label>
+        <label for="node-input-privateKey"><i class="fa fa-key"></i> Private Key</label>
         <input type="text" id="node-input-privateKey" placeholder="private_key_location" value="ejbca.private_key"
                style="width:250px;">
         <input type="hidden" id="node-input-privateKey_fieldType">
     </div>
 
     <div class="form-row">
-        <label for="node-input-publicKey"><i class="fa fa-folder"></i> Public Key</label>
+        <label for="node-input-publicKey"><i class="fa fa-key"></i> Public Key</label>
         <input type="text" id="node-input-publicKey" placeholder="public_key_location" value="ejbca.public_key"
                style="width:250px;">
         <input type="hidden" id="node-input-publicKey_fieldType">
