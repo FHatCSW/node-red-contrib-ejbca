@@ -1,6 +1,6 @@
 # node-red-contrib-ejbca Integration Package
 
-![Node-RED Logo](https://nodered.org/about/resources/media/nodered-icon-2.png)
+![Node-RED Logo](https://nodered.org/about/resources/media/node-red-icon-2.png)
 
 This Node-RED package provides a set of nodes for integrating with the EJBCA (Enterprise JavaBeans Certificate
 Authority) using the EJBCA REST interface. With these nodes, you can automate certificate management tasks and create
@@ -105,6 +105,7 @@ This package includes the following nodes:
 * **revocation-status**: This node checks the revocation status of a certificate.
 * **revoke**: This node is used to revoke a certificate.
 * **search-certificates**: This node is used to search for certificates within the EJBCA instance.
+* **store-certificate**: This node stores a DER string to a certificate on the local drive
 
 ## Usage Examples
 
@@ -130,9 +131,8 @@ package:
         "y": 460,
         "wires": [
             [
-                "857b75b2703a5547",
                 "861d4a82fc7471d2",
-                "dbd9ec2ecc88e951"
+                "72e52041865e0fec"
             ]
         ]
     },
@@ -170,23 +170,8 @@ package:
         "y": 520,
         "wires": [
             [
-                "f95252ac488c3a2b",
-                "47b6ba00be43e308"
-            ]
-        ]
-    },
-    {
-        "id": "f95252ac488c3a2b",
-        "type": "create-csr",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "privateKey": "",
-        "x": 450,
-        "y": 580,
-        "wires": [
-            [
-                "10ed98f8720adaca",
-                "bd7aaa5dbe362511"
+                "47b6ba00be43e308",
+                "22747245529fa398"
             ]
         ]
     },
@@ -197,13 +182,18 @@ package:
         "name": "",
         "tls": "7f5a2ba045b1a9b1",
         "ejbcaConfig": "4eedf14773d23515",
+        "username_fieldType": "str",
         "username": "node_red_test_user_fhk",
+        "csrInfo_fieldType": "msg",
+        "csrInfo": "ejbca.csr",
+        "enrollment_code": "foo123",
         "x": 460,
         "y": 640,
         "wires": [
             [
                 "9a8b01ac9b9d5bc8",
-                "55ebd375010e5ca5"
+                "55ebd375010e5ca5",
+                "cd4c0b0979d81a43"
             ]
         ]
     },
@@ -212,7 +202,11 @@ package:
         "type": "generate-p12",
         "z": "c24ed033437e3a9c",
         "name": "",
-        "output_directory": "/Users/florianhandke/Downloads",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "fileName_fieldType": "str",
+        "fileName": "x509_cert_1",
+        "p12_password": "foo123",
         "x": 460,
         "y": 700,
         "wires": [
@@ -307,16 +301,6 @@ package:
         "wires": []
     },
     {
-        "id": "dbd9ec2ecc88e951",
-        "type": "export-keys",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "exportLocation": "/Users/florianhandke/Downloads",
-        "x": 670,
-        "y": 460,
-        "wires": []
-    },
-    {
         "id": "9a35189ec430d633",
         "type": "inject",
         "z": "c24ed033437e3a9c",
@@ -342,10 +326,89 @@ package:
         ]
     },
     {
-        "id": "cbc6c2bd6781ac93",
+        "id": "22747245529fa398",
+        "type": "create-csr",
+        "z": "c24ed033437e3a9c",
+        "name": "",
+        "subjectAltnames_fieldType": "msg",
+        "subjectAltnames": "ejbca.subject_alternative_names",
+        "subjects_fieldType": "msg",
+        "subjects": "ejbca.subjects",
+        "privateKey_fieldType": "msg",
+        "privateKey": "ejbca.privateKey",
+        "publicKey_fieldType": "msg",
+        "publicKey": "ejbca.publicKey",
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "10ed98f8720adaca",
+                "bd7aaa5dbe362511"
+            ]
+        ]
+    },
+    {
+        "id": "72e52041865e0fec",
+        "type": "export-keys",
+        "z": "c24ed033437e3a9c",
+        "name": "",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "privatefileName_fieldType": "str",
+        "privatefileName": "private_key",
+        "publicfileName_fieldType": "str",
+        "publicfileName": "public_key",
+        "privateKey_fieldType": "msg",
+        "privateKey": "ejbca.privateKey",
+        "publicKey_fieldType": "msg",
+        "publicKey": "ejbca.publicKey",
+        "x": 690,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cd4c0b0979d81a43",
+        "type": "store-certificate",
+        "z": "c24ed033437e3a9c",
+        "name": "",
+        "certificate_fieldType": "msg",
+        "certificate": "ejbca.enroll_pkcs10.certificate",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "fileName_fieldType": "str",
+        "fileName": "cert",
+        "outputFormat": "PEM",
+        "fileExtension": "pem",
+        "x": 460,
+        "y": 760,
+        "wires": [
+            [
+                "b98476be7ea0f58e"
+            ]
+        ]
+    },
+    {
+        "id": "b98476be7ea0f58e",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "name": "debug export cert",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "4eedf14773d23515",
         "type": "ejbca-config-3",
-        "name": "testconfig",
-        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"hostname.com\",\n        \"certificate_profile_name\": \"MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
+        "name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
+        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"campuspki.germanywestcentral.cloudapp.azure.com\",\n        \"certificate_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"KS-CS-ShowcaseRobot-MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
     },
     {
         "id": "7f5a2ba045b1a9b1",
@@ -382,7 +445,8 @@ package:
         "name": "",
         "tls": "7f5a2ba045b1a9b1",
         "ejbcaConfig": "4eedf14773d23515",
-        "serial_number": "75E994749BA1F89F96C0B29EC22691C75BD95AC5",
+        "serialNumber_fieldType": "str",
+        "serialNumber": "6BC04C40DD3E4B7F90340CC8B6F4660FCE931939",
         "x": 470,
         "y": 160,
         "wires": [
@@ -448,10 +512,10 @@ package:
         "alpnprotocol": ""
     },
     {
-        "id": "cbc6c2bd6781ac93",
+        "id": "4eedf14773d23515",
         "type": "ejbca-config-3",
-        "name": "testconfig",
-        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"hostname.com\",\n        \"certificate_profile_name\": \"MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
+        "name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
+        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"campuspki.germanywestcentral.cloudapp.azure.com\",\n        \"certificate_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"KS-CS-ShowcaseRobot-MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
     }
 ]
 ```
@@ -467,83 +531,83 @@ package:
 
 ```json
 [
-  {
-    "id": "aa2a9a549ee0b813",
-    "type": "ejbca-status",
-    "z": "c24ed033437e3a9c",
-    "name": "",
-    "tls": "7f5a2ba045b1a9b1",
-    "ejbcaConfig": "4eedf14773d23515",
-    "x": 450,
-    "y": 80,
-    "wires": [
-      [
-        "aff9a51a7c018eef"
-      ]
-    ]
-  },
-  {
-    "id": "aff9a51a7c018eef",
-    "type": "debug",
-    "z": "c24ed033437e3a9c",
-    "name": "debug EJBCA status",
-    "active": true,
-    "tosidebar": true,
-    "console": false,
-    "tostatus": false,
-    "complete": "true",
-    "targetType": "full",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 700,
-    "y": 80,
-    "wires": []
-  },
-  {
-    "id": "a65c6140332d3fa3",
-    "type": "inject",
-    "z": "c24ed033437e3a9c",
-    "name": "trigger",
-    "props": [
-      {
-        "p": "payload"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": false,
-    "onceDelay": 0.1,
-    "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "x": 190,
-    "y": 80,
-    "wires": [
-      [
-        "aa2a9a549ee0b813"
-      ]
-    ]
-  },
-  {
-    "id": "7f5a2ba045b1a9b1",
-    "type": "tls-config",
-    "name": "",
-    "cert": "",
-    "key": "",
-    "ca": "",
-    "certname": "NodeRedRestAdmin001.cert.pem",
-    "keyname": "NodeRedRestAdmin001.key.pem",
-    "caname": "ca-chain.cert.pem",
-    "servername": "",
-    "verifyservercert": true,
-    "alpnprotocol": ""
-  },
-  {
-        "id": "cbc6c2bd6781ac93",
+    {
+        "id": "aa2a9a549ee0b813",
+        "type": "ejbca-status",
+        "z": "c24ed033437e3a9c",
+        "name": "",
+        "tls": "7f5a2ba045b1a9b1",
+        "ejbcaConfig": "4eedf14773d23515",
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "aff9a51a7c018eef"
+            ]
+        ]
+    },
+    {
+        "id": "aff9a51a7c018eef",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "name": "debug EJBCA status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a65c6140332d3fa3",
+        "type": "inject",
+        "z": "c24ed033437e3a9c",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "aa2a9a549ee0b813"
+            ]
+        ]
+    },
+    {
+        "id": "7f5a2ba045b1a9b1",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "NodeRedRestAdmin001.cert.pem",
+        "keyname": "NodeRedRestAdmin001.key.pem",
+        "caname": "ca-chain.cert.pem",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "4eedf14773d23515",
         "type": "ejbca-config-3",
-        "name": "testconfig",
-        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"hostname.com\",\n        \"certificate_profile_name\": \"MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
-  }
+        "name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
+        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"campuspki.germanywestcentral.cloudapp.azure.com\",\n        \"certificate_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"KS-CS-ShowcaseRobot-MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
+    }
 ]
 ```
 
