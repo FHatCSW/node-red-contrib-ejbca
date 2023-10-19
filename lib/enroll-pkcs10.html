@@ -22,19 +22,27 @@
     </div>
 
     <div class="form-row">
+        <label for="node-input-client_type"><i class="fa fa-gear"></i> Client type</label>
+        <select id="node-input-client_type">
+            <option value="REST">REST</option>
+            <option value="EST">EST</option>
+        </select>
+    </div>
+
+    <div class="form-row">
         <label for="node-input-csrInfo"><i class="fa fa-signature"></i> CSR </label>
         <input type="text" id="node-input-csrInfo" value="ejbca.csr" style="width:250px;">
         <input type="hidden" id="node-input-csrInfo_fieldType">
     </div>
 
 
-    <div class="form-row">
+    <div class="form-row node-input-username-row">
         <label for="node-input-username"><i class="fa fa-user"></i> Username</label>
         <input type="text" id="node-input-username" style="width:250px;">
         <input type="hidden" id="node-input-username_fieldType">
     </div>
 
-    <div class="form-row">
+    <div class="form-row node-input-enrollment_code-row">
         <label for="node-input-enrollment_code"><i class="fa fa-key"></i> Enrollment code</label>
         <input type="password" id="node-input-enrollment_code" placeholder="">
     </div>
@@ -66,9 +74,10 @@
                     value: "",
                     required: true
                 },
-                username_fieldType: {value:"str"},
+                client_type: {value: "REST"},
+                username_fieldType: {value: "str", required: true},
                 username: {value: "", required: true},
-                csrInfo_fieldType: {value:"msg"},
+                csrInfo_fieldType: {value: "msg"},
                 csrInfo: {value: "ejbca.csr", required: true},
                 enrollment_code: {type: "password"}
             },
@@ -84,15 +93,30 @@
             oneditprepare: function () {
 
                 $("#node-input-username").typedInput({
-                default: 'str',
-                types: ['msg', 'global', 'flow', 'str'],
-                typeField: $("#node-input-username_fieldType")
+                    default: 'str',
+                    types: ['msg', 'global', 'flow', 'str'],
+                    typeField: $("#node-input-username_fieldType")
                 });
 
                 $("#node-input-csrInfo").typedInput({
-                default: 'msg',
-                types: ['msg', 'global', 'flow'],
-                typeField: $("#node-input-csrInfo_fieldType")
+                    default: 'msg',
+                    types: ['msg', 'global', 'flow'],
+                    typeField: $("#node-input-csrInfo_fieldType")
+                });
+
+                var clientTypeSelected = $("#node-input-client_type");
+                var enrollmentCodeRow = $(".node-input-enrollment_code-row");
+                var userNameRow = $(".node-input-username-row");
+
+                clientTypeSelected.on("change", function () {
+                    var clientTypeSelected = $(this).val();
+                    if (clientTypeSelected === "REST") {
+                        enrollmentCodeRow.show();
+                        userNameRow.show();
+                    } else if (clientTypeSelected === "EST") {
+                        enrollmentCodeRow.hide();
+                        userNameRow.hide();
+                    }
                 });
 
 

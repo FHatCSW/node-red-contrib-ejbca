@@ -3,7 +3,7 @@
 ![Node-RED Logo](https://nodered.org/about/resources/media/node-red-icon-2.png)
 
 This Node-RED package provides a set of nodes for integrating with the EJBCA (Enterprise JavaBeans Certificate
-Authority) using the EJBCA REST interface. With these nodes, you can automate certificate management tasks and create
+Authority) using the EJBCA REST (and EST for pkcs10 enrollment) interface. With these nodes, you can automate certificate management tasks and create
 custom certificate workflows within Node-RED.
 
 ## Table of Contents
@@ -35,53 +35,54 @@ configuration should have the following structure:
 
 ```json
 {
-  "subjects": [
-    {
-      "property": "CN",
-      "prop_value": "",
-      "prop_required": true,
-      "prop_modifiable": true
-    },
-    {
-      "property": "O",
-      "prop_value": "Campus Schwarzwald",
-      "prop_required": true,
-      "prop_modifiable": false
-    },
-    {
-      "property": "OU",
-      "prop_value": "Showcase Robot",
-      "prop_required": true,
-      "prop_modifiable": false
-    },
-    {
-      "property": "C",
-      "prop_value": "",
-      "prop_required": true,
-      "prop_modifiable": false
+    "subjects": [
+        {
+            "property": "CN",
+            "prop_value": "",
+            "prop_required": true,
+            "prop_modifiable": true
+        },
+        {
+            "property": "O",
+            "prop_value": "Campus Schwarzwald",
+            "prop_required": true,
+            "prop_modifiable": false
+        },
+        {
+            "property": "OU",
+            "prop_value": "Showcase Robot",
+            "prop_required": true,
+            "prop_modifiable": false
+        },
+        {
+            "property": "C",
+            "prop_value": "DE",
+            "prop_required": true,
+            "prop_modifiable": false
+        }
+    ],
+    "subject_alternative_names": [],
+    "profile": {
+        "hostname": "campuspki.germanywestcentral.cloudapp.azure.com",
+        "certificate_profile_name": "KF-CS-ShowcaseRobot-MQTT-CertProfile",
+        "end_entity_profile_name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
+        "certificate_authority_name": "KS-CS-ShowcaseRobot-MQTT-CA",
+        "est_alias": "est_node_red_alias",
+        "username": {
+            "value": "",
+            "auto_generated": false
+        },
+        "enrollment_code": {
+            "required": true,
+            "auto_generated": false,
+            "minimum_bits": 0
+        },
+        "mail": {
+            "use": true,
+            "required": false,
+            "modifiable": false
+        }
     }
-  ],
-  "subject_alternative_names": [],
-  "profile": {
-    "hostname": "YOUR_HOSTNAME.com",
-    "certificate_profile_name": "YOUR_CERTIFICATE_PROFILE_NAME",
-    "end_entity_profile_name": "YOUR_END_ENTITY_PROFILE_NAME",
-    "certificate_authority_name": "YOUR_CERTIFICATE_AUTHORITY_NAME",
-    "username": {
-      "value": "",
-      "auto_generated": false
-    },
-    "enrollment_code": {
-      "required": true,
-      "auto_generated": false,
-      "minimum_bits": 0
-    },
-    "mail": {
-      "use": true,
-      "required": false,
-      "modifiable": false
-    }
-  }
 }
 ```
 
