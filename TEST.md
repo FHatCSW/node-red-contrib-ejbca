@@ -1,5 +1,5 @@
 
-In pacvkage directory
+In package directory
 ```
 npm pack    
 ```
