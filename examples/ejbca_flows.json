@@ -57,210 +57,6 @@
         ]
     },
     {
-        "id": "1e1d90a44661c2dc",
-        "type": "generate-keys",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "bitLength": "2048",
-        "x": 460,
-        "y": 460,
-        "wires": [
-            [
-                "861d4a82fc7471d2",
-                "72e52041865e0fec"
-            ]
-        ]
-    },
-    {
-        "id": "857b75b2703a5547",
-        "type": "configure-entity",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "ejbcaConfig": "4eedf14773d23515",
-        "CN": "test",
-        "O": "Campus Schwarzwald",
-        "OU": "Showcase Robot",
-        "C": "DE",
-        "L": "",
-        "ST": "",
-        "postalCode": "",
-        "streetAdress": "",
-        "serialNumber": "",
-        "emailAdress": "",
-        "givenName": "",
-        "surName": "",
-        "initials": "",
-        "title": "",
-        "description": "",
-        "ipAddress1": "",
-        "ipAddress2": "",
-        "ipAddress3": "",
-        "Uri1": "",
-        "Uri2": "",
-        "Uri3": "",
-        "Dns1": "",
-        "Dns2": "",
-        "Dns3": "",
-        "x": 460,
-        "y": 520,
-        "wires": [
-            [
-                "47b6ba00be43e308",
-                "22747245529fa398"
-            ]
-        ]
-    },
-    {
-        "id": "10ed98f8720adaca",
-        "type": "enroll-pkcs10",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "tls": "7f5a2ba045b1a9b1",
-        "ejbcaConfig": "4eedf14773d23515",
-        "username_fieldType": "str",
-        "username": "node_red_test_user_fhk",
-        "csrInfo_fieldType": "msg",
-        "csrInfo": "ejbca.csr",
-        "enrollment_code": "foo123",
-        "x": 460,
-        "y": 640,
-        "wires": [
-            [
-                "9a8b01ac9b9d5bc8",
-                "55ebd375010e5ca5",
-                "cd4c0b0979d81a43"
-            ]
-        ]
-    },
-    {
-        "id": "9a8b01ac9b9d5bc8",
-        "type": "generate-p12",
-        "z": "c24ed033437e3a9c",
-        "name": "",
-        "outputDirectory_fieldType": "str",
-        "outputDirectory": "/Users/florianhandke/Downloads",
-        "fileName_fieldType": "str",
-        "fileName": "x509_cert_1",
-        "p12_password": "foo123",
-        "x": 460,
-        "y": 700,
-        "wires": [
-            [
-                "4f57f015d2716d39"
-            ]
-        ]
-    },
-    {
-        "id": "861d4a82fc7471d2",
-        "type": "debug",
-        "z": "c24ed033437e3a9c",
-        "name": "debug generate keys",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "47b6ba00be43e308",
-        "type": "debug",
-        "z": "c24ed033437e3a9c",
-        "name": "debug entity configuration",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 720,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "bd7aaa5dbe362511",
-        "type": "debug",
-        "z": "c24ed033437e3a9c",
-        "name": "debug create CSR",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 690,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "55ebd375010e5ca5",
-        "type": "debug",
-        "z": "c24ed033437e3a9c",
-        "name": "debug pkcs#10 request",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "4f57f015d2716d39",
-        "type": "debug",
-        "z": "c24ed033437e3a9c",
-        "name": "debug P12 generation",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "9a35189ec430d633",
-        "type": "inject",
-        "z": "c24ed033437e3a9c",
-        "name": "trigger",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 460,
-        "wires": [
-            [
-                "1e1d90a44661c2dc"
-            ]
-        ]
-    },
-    {
         "id": "4c882a8e897f4a62",
         "type": "revocation-status",
         "z": "c24ed033437e3a9c",
@@ -453,8 +249,8 @@
         "rsa_bit_length": "2048",
         "ecdsa_curve": "prime256v1",
         "username": "node_red_test_user_fhk",
-        "x": 460,
-        "y": 840,
+        "x": 440,
+        "y": 1440,
         "wires": [
             [
                 "28362189d9efdea9"
@@ -478,8 +274,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 190,
-        "y": 840,
+        "x": 170,
+        "y": 1440,
         "wires": [
             [
                 "f5b5b238a7b1e37d"
@@ -499,14 +295,617 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 700,
-        "y": 840,
+        "x": 680,
+        "y": 1440,
         "wires": []
+    },
+    {
+        "id": "4a8f91e0c158c01b",
+        "type": "group",
+        "z": "c24ed033437e3a9c",
+        "name": "",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "cd77f7e51ee95a69",
+            "51ed0a3da61da078",
+            "dcc9fdfd9f9fe965",
+            "ccc6d6bf75331f5d",
+            "bab0272bb0b06c43",
+            "5aa108b5dac99c07",
+            "0f23e62bc183354d",
+            "2894c040a64d63c7",
+            "9f55b1cdc9c2bd71",
+            "b579dd08a623fa1e",
+            "f457e9b4239a4f4b",
+            "9cad83db3f458788",
+            "82c1edab45b9f80f",
+            "d605822ff1bace88",
+            "868049c2e421cc9a",
+            "1365558a7084ce5d"
+        ],
+        "x": 74,
+        "y": 879,
+        "w": 792,
+        "h": 502
+    },
+    {
+        "id": "cd77f7e51ee95a69",
+        "type": "generate-keys",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "bitLength": "2048",
+        "x": 440,
+        "y": 1040,
+        "wires": [
+            [
+                "bab0272bb0b06c43",
+                "9cad83db3f458788",
+                "51ed0a3da61da078"
+            ]
+        ]
+    },
+    {
+        "id": "51ed0a3da61da078",
+        "type": "configure-entity",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "ejbcaConfig": "4eedf14773d23515",
+        "CN": "test",
+        "O": "Campus Schwarzwald",
+        "OU": "Showcase Robot",
+        "C": "DE",
+        "L": "",
+        "ST": "",
+        "postalCode": "",
+        "streetAdress": "",
+        "serialNumber": "",
+        "emailAdress": "",
+        "givenName": "",
+        "surName": "",
+        "initials": "",
+        "title": "",
+        "description": "",
+        "ipAddress1": "",
+        "ipAddress2": "",
+        "ipAddress3": "",
+        "Uri1": "",
+        "Uri2": "",
+        "Uri3": "",
+        "Dns1": "",
+        "Dns2": "",
+        "Dns3": "",
+        "x": 440,
+        "y": 1100,
+        "wires": [
+            [
+                "5aa108b5dac99c07",
+                "f457e9b4239a4f4b"
+            ]
+        ]
+    },
+    {
+        "id": "dcc9fdfd9f9fe965",
+        "type": "enroll-pkcs10",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "tls": "7f5a2ba045b1a9b1",
+        "ejbcaConfig": "4eedf14773d23515",
+        "client_type": "REST",
+        "username_fieldType": "str",
+        "username": "node_red_test_user_fhk",
+        "csrInfo_fieldType": "msg",
+        "csrInfo": "ejbca.csr",
+        "enrollment_code": "foo123",
+        "x": 440,
+        "y": 1220,
+        "wires": [
+            [
+                "2894c040a64d63c7",
+                "ccc6d6bf75331f5d"
+            ]
+        ]
+    },
+    {
+        "id": "ccc6d6bf75331f5d",
+        "type": "generate-p12",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "fileName_fieldType": "str",
+        "fileName": "x509_cert_1",
+        "p12_password": "foo123",
+        "x": 440,
+        "y": 1280,
+        "wires": [
+            [
+                "9f55b1cdc9c2bd71"
+            ]
+        ]
+    },
+    {
+        "id": "bab0272bb0b06c43",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug generate keys",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "5aa108b5dac99c07",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug entity configuration",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "0f23e62bc183354d",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug create CSR",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "2894c040a64d63c7",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug pkcs#10 request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "9f55b1cdc9c2bd71",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug P12 generation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "b579dd08a623fa1e",
+        "type": "inject",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1040,
+        "wires": [
+            [
+                "cd77f7e51ee95a69"
+            ]
+        ]
+    },
+    {
+        "id": "f457e9b4239a4f4b",
+        "type": "create-csr",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "subjectAltnames_fieldType": "msg",
+        "subjectAltnames": "ejbca.subject_alternative_names",
+        "subjects_fieldType": "msg",
+        "subjects": "ejbca.subjects",
+        "privateKey_fieldType": "msg",
+        "privateKey": "ejbca.privateKey",
+        "publicKey_fieldType": "msg",
+        "publicKey": "ejbca.publicKey",
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "dcc9fdfd9f9fe965",
+                "0f23e62bc183354d"
+            ]
+        ]
+    },
+    {
+        "id": "9cad83db3f458788",
+        "type": "export-keys",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "privatefileName_fieldType": "str",
+        "privatefileName": "private_key",
+        "publicfileName_fieldType": "str",
+        "publicfileName": "public_key",
+        "privateKey_fieldType": "msg",
+        "privateKey": "ejbca.privateKey",
+        "publicKey_fieldType": "msg",
+        "publicKey": "ejbca.publicKey",
+        "x": 670,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "82c1edab45b9f80f",
+        "type": "store-certificate",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "",
+        "certificate_fieldType": "msg",
+        "certificate": "ejbca.enroll_pkcs10.certificate",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "fileName_fieldType": "str",
+        "fileName": "testcert",
+        "outputFormat": "DER",
+        "fileExtension": "crt",
+        "x": 440,
+        "y": 1340,
+        "wires": [
+            [
+                "d605822ff1bace88"
+            ]
+        ]
+    },
+    {
+        "id": "d605822ff1bace88",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "debug export cert",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "868049c2e421cc9a",
+        "type": "comment",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "REST PKCS10 enrollment",
+        "info": "",
+        "x": 210,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "1365558a7084ce5d",
+        "type": "comment",
+        "z": "c24ed033437e3a9c",
+        "g": "4a8f91e0c158c01b",
+        "name": "Change your TLS configuration, output directories etc. to your need",
+        "info": "",
+        "x": 340,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "5be4c59e7ae77b49",
+        "type": "group",
+        "z": "c24ed033437e3a9c",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "1e1d90a44661c2dc",
+            "857b75b2703a5547",
+            "10ed98f8720adaca",
+            "9a8b01ac9b9d5bc8",
+            "861d4a82fc7471d2",
+            "47b6ba00be43e308",
+            "bd7aaa5dbe362511",
+            "55ebd375010e5ca5",
+            "4f57f015d2716d39",
+            "9a35189ec430d633",
+            "22747245529fa398",
+            "72e52041865e0fec",
+            "cd4c0b0979d81a43",
+            "b98476be7ea0f58e",
+            "68032d67d0654b4f",
+            "c25362bbc892d289"
+        ],
+        "x": 74,
+        "y": 359,
+        "w": 812,
+        "h": 502
+    },
+    {
+        "id": "1e1d90a44661c2dc",
+        "type": "generate-keys",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "",
+        "bitLength": "2048",
+        "x": 460,
+        "y": 520,
+        "wires": [
+            [
+                "861d4a82fc7471d2",
+                "72e52041865e0fec",
+                "857b75b2703a5547"
+            ]
+        ]
+    },
+    {
+        "id": "857b75b2703a5547",
+        "type": "configure-entity",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "",
+        "ejbcaConfig": "4eedf14773d23515",
+        "CN": "test_est_002",
+        "O": "Campus Schwarzwald",
+        "OU": "Showcase Robot",
+        "C": "DE",
+        "L": "",
+        "ST": "",
+        "postalCode": "",
+        "streetAdress": "",
+        "serialNumber": "",
+        "emailAdress": "",
+        "givenName": "",
+        "surName": "",
+        "initials": "",
+        "title": "",
+        "description": "",
+        "ipAddress1": "",
+        "ipAddress2": "",
+        "ipAddress3": "",
+        "Uri1": "",
+        "Uri2": "",
+        "Uri3": "",
+        "Dns1": "",
+        "Dns2": "",
+        "Dns3": "",
+        "x": 460,
+        "y": 580,
+        "wires": [
+            [
+                "47b6ba00be43e308",
+                "22747245529fa398"
+            ]
+        ]
+    },
+    {
+        "id": "10ed98f8720adaca",
+        "type": "enroll-pkcs10",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "",
+        "tls": "7f5a2ba045b1a9b1",
+        "ejbcaConfig": "4eedf14773d23515",
+        "client_type": "EST",
+        "username_fieldType": "str",
+        "username": "node_red_test_user_fhk",
+        "csrInfo_fieldType": "msg",
+        "csrInfo": "ejbca.csr",
+        "enrollment_code": "foo123",
+        "x": 460,
+        "y": 700,
+        "wires": [
+            [
+                "55ebd375010e5ca5",
+                "9a8b01ac9b9d5bc8"
+            ]
+        ]
+    },
+    {
+        "id": "9a8b01ac9b9d5bc8",
+        "type": "generate-p12",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "",
+        "outputDirectory_fieldType": "str",
+        "outputDirectory": "/Users/florianhandke/Downloads",
+        "fileName_fieldType": "str",
+        "fileName": "x509_cert_est_1",
+        "p12_password": "foo123",
+        "x": 460,
+        "y": 760,
+        "wires": [
+            [
+                "4f57f015d2716d39"
+            ]
+        ]
+    },
+    {
+        "id": "861d4a82fc7471d2",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "debug generate keys",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "47b6ba00be43e308",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "debug entity configuration",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "bd7aaa5dbe362511",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "debug create CSR",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "55ebd375010e5ca5",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "debug pkcs#10 request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "4f57f015d2716d39",
+        "type": "debug",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "debug P12 generation",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "9a35189ec430d633",
+        "type": "inject",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "trigger",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "1e1d90a44661c2dc"
+            ]
+        ]
     },
     {
         "id": "22747245529fa398",
         "type": "create-csr",
         "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
         "name": "",
         "subjectAltnames_fieldType": "msg",
         "subjectAltnames": "ejbca.subject_alternative_names",
@@ -517,7 +916,7 @@
         "publicKey_fieldType": "msg",
         "publicKey": "ejbca.publicKey",
         "x": 450,
-        "y": 580,
+        "y": 640,
         "wires": [
             [
                 "10ed98f8720adaca",
@@ -529,6 +928,7 @@
         "id": "72e52041865e0fec",
         "type": "export-keys",
         "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
         "name": "",
         "outputDirectory_fieldType": "str",
         "outputDirectory": "/Users/florianhandke/Downloads",
@@ -541,24 +941,25 @@
         "publicKey_fieldType": "msg",
         "publicKey": "ejbca.publicKey",
         "x": 690,
-        "y": 460,
+        "y": 520,
         "wires": []
     },
     {
         "id": "cd4c0b0979d81a43",
         "type": "store-certificate",
         "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
         "name": "",
         "certificate_fieldType": "msg",
         "certificate": "ejbca.enroll_pkcs10.certificate",
         "outputDirectory_fieldType": "str",
         "outputDirectory": "/Users/florianhandke/Downloads",
         "fileName_fieldType": "str",
-        "fileName": "cert",
-        "outputFormat": "PEM",
-        "fileExtension": "pem",
+        "fileName": "testcert_est_01",
+        "outputFormat": "DER",
+        "fileExtension": "cer",
         "x": 460,
-        "y": 760,
+        "y": 820,
         "wires": [
             [
                 "b98476be7ea0f58e"
@@ -569,6 +970,7 @@
         "id": "b98476be7ea0f58e",
         "type": "debug",
         "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
         "name": "debug export cert",
         "active": true,
         "tosidebar": true,
@@ -579,7 +981,29 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 690,
-        "y": 760,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "68032d67d0654b4f",
+        "type": "comment",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "EST PKCS10 enrollment",
+        "info": "",
+        "x": 210,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c25362bbc892d289",
+        "type": "comment",
+        "z": "c24ed033437e3a9c",
+        "g": "5be4c59e7ae77b49",
+        "name": "Change your TLS configuration, output directories etc. to your need",
+        "info": "",
+        "x": 340,
+        "y": 440,
         "wires": []
     },
     {
@@ -600,6 +1024,6 @@
         "id": "4eedf14773d23515",
         "type": "ejbca-config-3",
         "name": "KF-CS-ShowcaseRobot-MQTT-Client-EndEntity",
-        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"campuspki.germanywestcentral.cloudapp.azure.com\",\n        \"certificate_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"KS-CS-ShowcaseRobot-MQTT-CA\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
+        "ejbcaConf": "{\n    \"subjects\": [\n        {\n            \"property\": \"CN\",\n            \"prop_value\": \"\",\n            \"prop_required\": true,\n            \"prop_modifiable\": true\n        },\n        {\n            \"property\": \"O\",\n            \"prop_value\": \"Campus Schwarzwald\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"OU\",\n            \"prop_value\": \"Showcase Robot\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        },\n        {\n            \"property\": \"C\",\n            \"prop_value\": \"DE\",\n            \"prop_required\": true,\n            \"prop_modifiable\": false\n        }\n    ],\n    \"subject_alternative_names\": [],\n    \"profile\": {\n        \"hostname\": \"campuspki.germanywestcentral.cloudapp.azure.com\",\n        \"certificate_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-CertProfile\",\n        \"end_entity_profile_name\": \"KF-CS-ShowcaseRobot-MQTT-Client-EndEntity\",\n        \"certificate_authority_name\": \"KS-CS-ShowcaseRobot-MQTT-CA\",\n        \"est_alias\": \"est_node_red_alias\",\n        \"username\": {\n            \"value\": \"\",\n            \"auto_generated\": false\n        },\n        \"enrollment_code\": {\n            \"required\": true,\n            \"auto_generated\": false,\n            \"minimum_bits\": 0\n        },\n        \"mail\": {\n            \"use\": true,\n            \"required\": false,\n            \"modifiable\": false\n        }\n    }\n}"
     }
 ]
