@@ -8,6 +8,8 @@ custom certificate workflows within Node-RED.
 
 > To setup EJBCA follow the documentation on https://www.ejbca.org
 
+> ⚠️ Warning: ⚠️ Use this node with care! Some nodes expose credentials and key material to the flow (and thus to the memory). Therefore you should only use it in a trusted environment.
+
 ## Table of Contents
 
 - [Installation](#installation)
