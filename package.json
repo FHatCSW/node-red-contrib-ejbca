@@ -2,11 +2,7 @@
   "name": "node-red-contrib-ejbca",
   "version": "1.0.3",
   "description": "Node-RED Nodes to request, renew and revoke certificates via a RESTful API with EJBCA",
-  "keywords": [
-    "node-red",
-    "EJBCA",
-    "certificate management"
-  ],
+  "keywords": ["node-red"],
   "homepage": "https://github.com/FHatCSW/node-red-contrib-ejbca",
   "repository": {
     "type": "git",
