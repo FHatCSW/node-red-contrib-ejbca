@@ -1,10 +1,12 @@
 # node-red-contrib-ejbca Integration Package
 
-![Node-RED Logo](https://nodered.org/about/resources/media/node-red-icon-2.png)
+![EJBCA Logo](https://www.ejbca.org/wp-content/uploads/2023/04/ejbca-logo-thumbnail-page.jpeg)
 
 This Node-RED package provides a set of nodes for integrating with the EJBCA (Enterprise JavaBeans Certificate
 Authority) using the EJBCA REST (and EST for pkcs10 enrollment) interface. With these nodes, you can automate certificate management tasks and create
 custom certificate workflows within Node-RED.
+
+> To setup EJBCA follow the documentation on https://www.ejbca.org
 
 ## Table of Contents
 
