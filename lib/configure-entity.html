@@ -78,12 +78,43 @@
                             "ipAddress1", "ipAddress2", "ipAddress3", "Uri1", "Uri2", "Uri3", "Dns1", "Dns2", "Dns3"
                         ];
 
+                        var valuesNotListed = [];
+
+                        // Iterate through each predefinedInput
+                        predefinedInputs.forEach(function (inputName) {
+                            var isInputListed = false;
+
+                            // Check if the inputName is listed in subjects
+                            configdata["subjects"] && configdata["subjects"].forEach(function (subject) {
+                                if (subject.property === inputName) {
+                                    isInputListed = true;
+                                }
+                            });
+
+                            // Check if the inputName is listed in subject_alternative_names
+                            configdata["subject_alternative_names"] && configdata["subject_alternative_names"].forEach(function (subjectAlt) {
+                                if (subjectAlt.property === inputName) {
+                                    isInputListed = true;
+                                }
+                            });
+
+                            // If the inputName is not listed, add it to the valuesNotListed array
+                            if (!isInputListed) {
+                                valuesNotListed.push(inputName);
+                            }
+                        });
+
                         // Hide all inputs initially
                         predefinedInputs.forEach(function (inputName) {
                             var inputElement = $("#node-input-" + inputName);
                             var labelElement = $("label[for='node-input-" + inputName + "']");
                             inputElement.hide();
                             labelElement.hide();
+                        });
+
+                        valuesNotListed.forEach(function (inputName) {
+                            var inputElement = $("#node-input-" + inputName);
+                            inputElement.val('');
                         });
 
                         function processProperties(properties, inputName) {
